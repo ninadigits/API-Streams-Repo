@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     /*
       1.0 Create Table moengages
-      2.0 Create Table events
+      2.0 Create Table Events
       3.0 Create Table event_attributes
       4.0 Create Table user_attributes
       5.0 Create Table device_attributes
@@ -14,7 +14,7 @@ module.exports = {
     // -------------------------------------
     // 1.0 Create Table Moengages
     // -------------------------------------
-    await queryInterface.createTable('moengages', {
+    await queryInterface.createTable('Moengages', {
       id: {
         type: Sequelize.INTEGER(100),
         autoIncrement: true,
@@ -40,9 +40,9 @@ module.exports = {
     });
     
     // -------------------------------------
-    // 2.0 Create Table events
+    // 2.0 Create Table Events
     // -------------------------------------
-    await queryInterface.createTable('events', {
+    await queryInterface.createTable('Events', {
       event_uuid: {
         type: Sequelize.INTEGER(100),
         primaryKey: true,
@@ -53,7 +53,7 @@ module.exports = {
         type: Sequelize.STRING(30),
         refereces: {
           model: {
-            tableName: 'moengages',
+            tableName: 'Moengages',
             model: 'moengage',
             schema: 'schema'
           },
@@ -118,10 +118,10 @@ module.exports = {
       campaign_id: {
         type: Sequelize.STRING(30),
         refereces: {
-          // model: 'events',
+          // model: 'Events',
           model: {
-            tableName: 'events',
-            model: 'events',
+            tableName: 'Events',
+            model: 'Events',
             schema: 'schema'
           },
           key: 'campaign_id',
@@ -132,9 +132,9 @@ module.exports = {
       event_uuid: {
         type: Sequelize.INTEGER(100),
         refereces: {
-          // model: 'events',
+          // model: 'Events',
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -176,7 +176,7 @@ module.exports = {
         refereces: {
           // model: 'events',
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -190,7 +190,7 @@ module.exports = {
         refereces: {
           // model: 'events',
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -230,7 +230,7 @@ module.exports = {
         refereces: {
           // model: 'events',
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -244,7 +244,7 @@ module.exports = {
         refereces: {
           // model: 'events',
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -282,8 +282,8 @@ module.exports = {
         type: Sequelize.INTEGER(100),
         refereces: {
           model: {
-            tableName: 'moengages',
-            model: 'Moengage',
+            tableName: 'Moengages',
+            model: 'moengage',
             schema: 'schema'
           },
           key: 'id',
@@ -295,7 +295,7 @@ module.exports = {
         type: Sequelize.INTEGER(100),
         refereces: {
           model: {
-            tableName: 'events',
+            tableName: 'Events',
             model: 'events',
             schema: 'schema'
           },
@@ -328,8 +328,8 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     // await queryInterface.removeConstraint('events', 'moe_req_id');
-    await queryInterface.dropTable('moengages');
-    await queryInterface.dropTable('events');
+    await queryInterface.dropTable('Moengages');
+    await queryInterface.dropTable('Mvents');
     await queryInterface.dropTable('EventAttributes');
     await queryInterface.dropTable('UserAttributes');
     await queryInterface.dropTable('DeviceAttributes');
