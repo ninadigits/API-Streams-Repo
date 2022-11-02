@@ -14,6 +14,9 @@ module.exports = {
     // -------------------------------------
     // 1.0 Create Table Moengages
     // -------------------------------------
+    // -------------------------------------
+    // 1.0 Create Table Moengages
+    // -------------------------------------
     await queryInterface.createTable('Moengages', {
       id: {
         type: Sequelize.INTEGER(100),
@@ -40,7 +43,7 @@ module.exports = {
     });
     
     // -------------------------------------
-    // 2.0 Create Table Events
+    // 2.0 Create Table events
     // -------------------------------------
     await queryInterface.createTable('Events', {
       event_uuid: {
@@ -118,10 +121,10 @@ module.exports = {
       campaign_id: {
         type: Sequelize.STRING(30),
         refereces: {
-          // model: 'Events',
+          // model: 'events',
           model: {
             tableName: 'Events',
-            model: 'Events',
+            model: 'events',
             schema: 'schema'
           },
           key: 'campaign_id',
@@ -132,9 +135,9 @@ module.exports = {
       event_uuid: {
         type: Sequelize.INTEGER(100),
         refereces: {
-          // model: 'Events',
+          // model: 'events',
           model: {
-            tableName: 'Events',
+            tableName: 'events',
             model: 'events',
             schema: 'schema'
           },

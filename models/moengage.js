@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
     sequelize,
-    modelName: 'moengage',
+    modelName: 'Moengage',
   });
   return Moengage;
 };
