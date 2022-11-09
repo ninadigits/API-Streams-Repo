@@ -160,7 +160,7 @@ const storeStreams = async(req, res) => {
                             moe_id: insMoe.id,
                             event_uuid: dataEvents[j].event_uuid,
                             attribute_type: 'event_attributes',
-                            attribite_key: 'campaign_id',
+                            attribute_key: 'campaign_id',
                             attribute_value: dataEvents[j]['event_uuid'],
                             created_at: insMoe['created_at']
                         });
@@ -168,7 +168,7 @@ const storeStreams = async(req, res) => {
                             moe_id: insMoe.id,
                             event_uuid: dataEvents[j].event_uuid,
                             attribute_type: 'event_attributes',
-                            attribite_key: 'campaign_name',
+                            attribute_key: 'campaign_name',
                             attribute_value: eventObj[j]['event_attributes']['campaign_name'],
                             created_at: insMoe['created_at']
                         });
@@ -176,7 +176,7 @@ const storeStreams = async(req, res) => {
                             moe_id: insMoe.id,
                             event_uuid: dataEvents[j].event_uuid,
                             attribute_type: 'event_attributes',
-                            attribite_key: 'campaign_type',
+                            attribute_key: 'campaign_type',
                             attribute_value: eventObj[j]['event_attributes']['campaign_type'],
                             created_at: insMoe['created_at']
                         });
@@ -184,7 +184,7 @@ const storeStreams = async(req, res) => {
                             moe_id: insMoe.id,
                             event_uuid: dataEvents[j].event_uuid,
                             attribute_type: 'event_attributes',
-                            attribite_key: 'email',
+                            attribute_key: 'email',
                             attribute_value: eventObj[j]['user_attributes']['email'],
                             created_at: insMoe['created_at']
                         }).then(function (logStreams) {
@@ -195,7 +195,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'user_attributes',
-                                attribite_key: 'uid',
+                                attribute_key: 'uid',
                                 attribute_value: dataEvents[j]['uid'],
                                 created_at: insMoe['created_at']
                             });
@@ -203,7 +203,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'user_attributes',
-                                attribite_key: 'campaign_id',
+                                attribute_key: 'campaign_id',
                                 attribute_value: dataEvents[j]['campaign_id'],
                                 created_at: insMoe['created_at']
                             });
@@ -211,7 +211,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'user_attributes',
-                                attribite_key: 'name',
+                                attribute_key: 'name',
                                 attribute_value: eventObj[j]['user_attributes']['name'],
                                 created_at: insMoe['created_at']
                             });
@@ -219,7 +219,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'user_attributes',
-                                attribite_key: 'email',
+                                attribute_key: 'email',
                                 attribute_value: eventObj[j]['user_attributes']['email'],
                                 created_at: insMoe['created_at']
                             });
@@ -227,7 +227,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'user_attributes',
-                                attribite_key: 'phone',
+                                attribute_key: 'phone',
                                 attribute_value: eventObj[j]['user_attributes']['phone'],
                                 created_at: insMoe['created_at']
                             });
@@ -238,7 +238,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'device_attributes',
-                                attribite_key: 'push_id',
+                                attribute_key: 'push_id',
                                 attribute_value: dataEvents[j]['push_id'],
                                 created_at: insMoe['created_at']
                             });
@@ -246,7 +246,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'device_attributes',
-                                attribite_key: 'device_id',
+                                attribute_key: 'device_id',
                                 attribute_value: eventObj[j]['device_attributes']['device_id'],
                                 created_at: insMoe['created_at']
                             });
@@ -254,7 +254,7 @@ const storeStreams = async(req, res) => {
                                 moe_id: insMoe.id,
                                 event_uuid: dataEvents[j].event_uuid,
                                 attribute_type: 'device_attributes',
-                                attribite_key: 'device_name',
+                                attribute_key: 'device_name',
                                 attribute_value: eventObj[j]['device_attributes']['device_name'],
                                 created_at: insMoe['created_at']
                             });
