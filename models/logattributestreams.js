@@ -54,9 +54,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'Attribute Type Empty',
       allowNull: false,
     },
-    attribite_key: {
+    attribute_key: {
       type: DataTypes.STRING(100),
-      defaultValue: 'Attribute Name Empty',
+      defaultValue: 'Attribute Key Empty',
       allowNull: false,
     },
     attribute_value: {

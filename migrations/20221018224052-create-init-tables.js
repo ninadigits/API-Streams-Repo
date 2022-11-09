@@ -312,7 +312,7 @@ module.exports = {
         defaultValue: 'Attribute Type Empty',
         allowNull: false,
       },
-      attribite_key: {
+      attribute_key: {
         type: Sequelize.STRING(100),
         defaultValue: 'Attribute Name Empty',
         allowNull: false,
