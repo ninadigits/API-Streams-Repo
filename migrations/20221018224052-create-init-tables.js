@@ -6,6 +6,9 @@ module.exports = {
       1.0 Create Table moengages
       2.0 Create Table events
       3.0 Create Table event_attributes
+      4.0 Create Table user_attributes
+      5.0 Create Table device_attributes
+      6.0 Create Table event_attributes
     */
 
     // -------------------------------------
@@ -100,7 +103,7 @@ module.exports = {
     });
 
     // ---------------------------------
-    // 3.0 Create Table event_attributes
+    // 6.0 Create Table event_attributes
     // ---------------------------------
     await queryInterface.createTable('LogAttributeStreams', { 
       id: {
