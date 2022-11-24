@@ -9,6 +9,7 @@ const MoengageController = require('../controllers/MoengageController');
 router.post('/create', function(req, res, next) {
     res.send('API Streams POST');
 });
+
 router.get('/', MoengageController.getAllMoengage);
 router.post('/store/streams', MoengageController.storeStreams);
 // -------------------------

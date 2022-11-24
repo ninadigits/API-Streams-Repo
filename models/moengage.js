@@ -11,15 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      const Event = sequelize.define('events', { moe_req_id: DataTypes.STRING(30) }, { timestamps: false });
-      Moengage.hasOne(Event, {
-        foreignKey: {
-          name: 'moeID'
-        }
-      });
-      Event.belongsTo(Moengage);
-      Moengage.hasMany(Event);
+      models.Moengage.belongsToMany(models.Events); 
+      models.Events.belongsToMany(models.Moengage);
     }
   }
   Moengage.init({
@@ -27,13 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    source: {
-      type: DataTypes.STRING(255),
-    },
-    moe_req_id: {
-      type: DataTypes.STRING(30),
-      allowNull: false,
-      unique: true,
+    export_doc_id: {
+      type: DataTypes.STRING(50)
     },
     created_at: {
       type: DataTypes.DATE,
@@ -44,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     sequelize,
     modelName: 'Moengage',
+    tableName: 'moengages'
   });
+
   return Moengage;
 };

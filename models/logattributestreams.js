@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 var Events = require('../models/events');
-var EventAttributes = require('./eventattributes');
 module.exports = (sequelize, DataTypes) => {
   class LogAttributeStreams extends Model {
     /**
@@ -27,24 +26,21 @@ module.exports = (sequelize, DataTypes) => {
     moe_id: {
       type: DataTypes.INTEGER(100),
       refereces: {
-        model: {
-          tableName: 'moengages',
-          model: 'Moengage',
-          schema: 'schema'
-        },
+        model: 'moengages',
+        tableName: 'Moengages',
+        schema: 'schema',
         key: 'id',
       },
       allowNull: false,
       onDelete: 'CASCADE',
     },
-    event_uuid: {
+    event_id: {
       type: DataTypes.INTEGER(100),
       refereces: {
-        model: {
-          tableName: 'events',
-          schema: 'schema'
-        },
-        key: 'event_uuid',
+        model: 'events',
+        tableName: 'Events',
+        schema: 'schema',
+        key: 'id'
       },
       allowNull: false,
       onDelete: 'CASCADE',
@@ -56,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     attribute_key: {
       type: DataTypes.STRING(100),
-      defaultValue: 'Attribute Key Empty',
+      defaultValue: 'Attribute Name Empty',
       allowNull: false,
     },
     attribute_value: {
@@ -65,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     created_at: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
       defaultValue: DataTypes.NOW,
       allowNull: false
     }

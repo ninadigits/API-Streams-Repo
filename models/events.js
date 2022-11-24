@@ -3,10 +3,9 @@ const {
   Model
 } = require('sequelize');
 // var sequelize = require('sequelize');
-var Moengage = require('./moengage');
-var EventAttributes = require('./eventattributes');
-var UserAttributes = require('./userattribute');
-var LogAttributeStreams = require('./logattributestreams')
+const Moengage = require('./moengage');
+const LogAttributeStreams = require('./logattributestreams');
+// const models = require('./models');
 module.exports = (sequelize, DataTypes) => {
   class Events extends Model {
     /**
@@ -15,66 +14,58 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Events.belongsTo(models.Moengage, {
-        foreignKey: 'moe_req_id'
-      });
+      models.Events.belongsToMany(Moengage); 
+      Moengage.belongsToMany(models.Events);
     }
   }
   Events.init({
-    event_uuid: {
-      type: DataTypes.INTEGER(100),
+    id: {
+      type: DataTypes.STRING(100),
       primaryKey: true,
-      autoIncrement: true,
       allowNull: false,
+      unique: true,
     },
-    moe_req_id: {
-      type: DataTypes.STRING(30),
-      refereces: {
-        model: {
-          tableName: 'moengages',
-          schema: 'schema'
-        },
-        key: 'id',
+    moe_id: {
+      type: Sequelize.INTEGER(200), 
+      references: {
+        model: 'moengages',
+        tableName: 'Moengages',
+        schema: 'schema',
+        key: 'id'
       },
       allowNull: false,
-      onDelete: 'CASCADE',
-    },
-    event_code: {
-      type: DataTypes.STRING(40),
-      allowNull: false,
-    },
-    event_name: {
-      type: DataTypes.STRING(100),
-      defaultValue: 'Event Name Empty',
-      allowNull: false,
-    },
-    event_time: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      allowNull: false,
+      onDelete: 'CASCADE'
     },
     event_type: {
       type: DataTypes.STRING(50),
-      defaultValue: 'Event Type Empty',
-      allowNull: false,
+      defaultValue: 'Event Type Empty'
+    },
+    event_code: {
+      type: DataTypes.STRING(50),
+      defaultValue: 'Event Code Empty'
+    },
+    event_name: {
+      type: DataTypes.STRING(50),
+      defaultValue: 'Event Name Empty'
+    },
+    event_time: {
+      type: DataTypes.DATE,
     },
     event_source: {
       type: DataTypes.STRING(255),
       defaultValue: 'Event Source Empty',
       allowNull: false,
     },
-    push_id: {
-      type: DataTypes.STRING(255),
-    },
-    uid: {
+    event_uuid: {
       type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
     },
-    campaign_id: {
-      type: DataTypes.STRING(30),
+    event_time: {
+      type: DataTypes.INTEGER(100)
     },
     created_at: {
-      type: DataTypes.DATE,
+      type: 'TIMESTAMP',
       defaultValue: DataTypes.NOW,
       allowNull: false
     },
@@ -82,6 +73,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     sequelize,
     modelName: 'Events',
+    tableName: "events",
   });
+
   return Events;
 };
