@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
+// const { QueryTypes, json } = require('sequelize');
 const { QueryTypes } = require('@sequelize/core');
 const models = require('../models');
 const Sequelize = require('sequelize');
+const bodyParser = require('body-parser');
 const dbConn = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     dialect: process.env.DB_DIALECT,
     host: process.env.DB_HOST,
@@ -12,7 +14,7 @@ const dbConn = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, proce
       requestTimeout: 30000,
       encrypt: true
     }
-});
+})
 
 const getAllMoengage = async(req, res) => {
     const resMoengage = await models.Moengage.findAll({});
@@ -258,4 +260,4 @@ const storeStreams = async(req, res) => {
 // END
 // -------------------
 
-module.exports = { getAllMoengage, storeStreams};
+module.exports = { getAllMoengage, storeStreams };
