@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     },
     event_id: {
-      type: DataTypes.INTEGER(100),
+      type: DataTypes.STRING(100),
       refereces: {
         model: 'events',
         tableName: 'Events',

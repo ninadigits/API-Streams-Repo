@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Moengage.belongsToMany(models.Events); 
-      models.Events.belongsToMany(models.Moengage);
+      // models.Moengage.belongsToMany(models.Events); 
+      // models.Events.belongsToMany(models.Moengage);
     }
   }
   Moengage.init({
