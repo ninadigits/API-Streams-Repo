@@ -1,7 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-// const { QueryTypes, json } = require('sequelize');
-const { QueryTypes } = require('@sequelize/core');
 const models = require('../models');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
