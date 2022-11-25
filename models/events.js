@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     moe_id: {
-      type: Sequelize.INTEGER(200), 
+      type: DataTypes.INTEGER(200), 
       references: {
         model: 'moengages',
         tableName: 'Moengages',
