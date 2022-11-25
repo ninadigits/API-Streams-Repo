@@ -69,6 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     sequelize,
     modelName: 'LogAttributeStreams',
+    tableName: 'LogAttributeStreams'
   });
   return LogAttributeStreams;
 };

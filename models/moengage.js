@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     sequelize,
     modelName: 'Moengage',
-    tableName: 'moengages'
+    tableName: 'Moengage'
   });
 
   return Moengage;
