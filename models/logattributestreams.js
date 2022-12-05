@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     },
     event_id: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.INTEGER(100),
       refereces: {
         model: 'events',
         tableName: 'Events',
@@ -58,6 +58,14 @@ module.exports = (sequelize, DataTypes) => {
     attribute_value: {
       type: DataTypes.TEXT,
       defaultValue: 'Attribute Value Empty',
+      allowNull: false,
+    },
+    entry_year: {
+      type: DataTypes.INTEGER(10),
+      allowNull: false,
+    },
+    entry_month: {
+      type: DataTypes.INTEGER(4),
       allowNull: false,
     },
     created_at: {
