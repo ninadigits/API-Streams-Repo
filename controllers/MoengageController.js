@@ -45,7 +45,7 @@ const deviceCountFunc = async(req, res) => {
     const deviceType = 'manufacturer';
     const now = new Date();
     const getYearNow = now.getFullYear();
-    const getMonthNow = now.getMonth();
+    const getMonthNow = now.getMonth() + 1;
     const tx = await dbConn.transaction();
     const dataLogStreams = await models.LogAttributeStreams.findAll({
         where: {
@@ -187,7 +187,7 @@ const storeStreams = async(req, res) => {
             }
             const dateNow = new Date();
             const getYearNow = dateNow.getFullYear();
-            const getMonthNow = dateNow.getMonth();
+            const getMonthNow = dateNow.getMonth() + 1;
             const eventIns = await mEvents.create({
                 id : eventID,
                 moe_id: insMoe.id,
