@@ -20,14 +20,6 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
       },
-      entry_year: {
-        type: Sequelize.INTEGER(10),
-        allowNull: false,
-      },
-      entry_month: {
-        type: Sequelize.INTEGER(4),
-        allowNull: false,
-      },
     });
   },
   async down(queryInterface, Sequelize) {
