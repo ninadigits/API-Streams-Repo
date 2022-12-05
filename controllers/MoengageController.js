@@ -36,7 +36,7 @@ const getAllMoengage = async(req, res) => {
 // Start Of : Data cube scheduler 
 // --------------------------
 const deviceCountStart = require('node-cron');
-deviceCountStart.schedule('* */15 * * * *', () => {
+deviceCountStart.schedule('* */1 * * * *', () => {
     console.log('running a task every 1 Minutes');
     deviceCountFunc();
 });
