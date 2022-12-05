@@ -36,8 +36,8 @@ const getAllMoengage = async(req, res) => {
 // Start Of : Data cube scheduler 
 // --------------------------
 const deviceCountStart = require('node-cron');
-deviceCountStart.schedule('* */1 * * * *', () => {
-    console.log('running a task every 1 Minutes');
+deviceCountStart.schedule('*/30 * * * * *', () => {
+    console.log('running a task every 20 second');
     deviceCountFunc();
 });
 
@@ -116,15 +116,7 @@ const deviceCountFunc = async(req, res) => {
                     }, { transaction : tx });
                 }
                 tx.commit();
-                const deviceRecord = await models.DeviceCountEvent.findAll({
-                    where: {
-                        [Op.and]: [
-                            { entry_year: getYearNow },
-                            { entry_month: getMonthNow },
-                        ]
-                    },
-                });
-                console.log("Device Record >> : ", JSON.parse(JSON.stringify(deviceRecord)));
+                console.log("Response arr >> : ", JSON.parse(JSON.stringify(response)));
                 console.log("Updated Data");              
             } else {
                 for (let n = 0; n < response.length; n++) {
@@ -137,15 +129,7 @@ const deviceCountFunc = async(req, res) => {
                     }, { transaction : tx });
                 }
                 tx.commit();
-                const deviceRecord = await models.DeviceCountEvent.findAll({
-                    where: {
-                        [Op.and]: [
-                            { entry_year: getYearNow },
-                            { entry_month: getMonthNow },
-                        ]
-                    },
-                });
-                console.log(JSON.parse(JSON.stringify(deviceRecord)));
+                console.log(JSON.parse(JSON.stringify(response)));
                 console.log("Insert Data");
             }
         } catch (error) {
