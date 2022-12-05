@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     sequelize,
     modelName: 'DeviceCountEvent',
-    tableName: 'devicecountevents'
+    tableName: 'DeviceCountEvents'
   });
   return DeviceCountEvent;
 };
