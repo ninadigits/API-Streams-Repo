@@ -86,7 +86,7 @@ const deviceCountFunc = async(req, res) => {
                     } 
                 }
             }
-            console.log("Test Spam >> : ", JSON.parse(JSON.stringify(response)));
+            // console.log("Test Spam >> : ", JSON.parse(JSON.stringify(response)));
             const ModelDeviceCount = await models.DeviceCountEvent;
             const checkIfEmpty = await models.DeviceCountEvent.findAll({
                 where: {
@@ -97,7 +97,7 @@ const deviceCountFunc = async(req, res) => {
                 },
             });
             if(checkIfEmpty.length > 0) {
-                console.log("Update > : ", response);
+                // console.log("Update > : ", response);
                 const delOldData = await ModelDeviceCount.destroy({
                     where: {
                         [Op.and]: [
@@ -191,7 +191,6 @@ const storeStreams = async(req, res) => {
             const eventIns = await mEvents.create({
                 id : eventID,
                 moe_id: insMoe.id,
-                uid: eventObj['uid'],
                 event_type: eventObj['event_type'],
                 event_code: eventObj['event_code'],
                 event_name: eventObj['event_name'],
@@ -210,6 +209,16 @@ const storeStreams = async(req, res) => {
                 // Start Of : User Attribute Insert
                 // ------------------------------
                 const bodyUserAttr = req.body.event.user_attributes;
+                await mLogStreams.create({
+                    moe_id: insMoe.id,
+                    event_id: eventIns.id,
+                    attribute_type: 'user_attributes',
+                    attribute_key: 'uid',
+                    attribute_value: eventObj['uid'],
+                    created_at: insMoe.created_at,
+                    entry_year: getYearNow,
+                    entry_month: getMonthNow
+                });
                 await mLogStreams.create({
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
@@ -282,6 +291,16 @@ const storeStreams = async(req, res) => {
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
                     attribute_type: 'event_attributes',
+                    attribute_key: 'uid',
+                    attribute_value: eventObj['uid'],
+                    created_at: insMoe.created_at,
+                    entry_year: getYearNow,
+                    entry_month: getMonthNow
+                });
+                await mLogStreams.create({
+                    moe_id: insMoe.id,
+                    event_id: eventIns.id,
+                    attribute_type: 'event_attributes',
                     attribute_key: 'appVersion',
                     attribute_value: bodyEventAttr['appVersion'],
                     created_at: insMoe.created_at,
@@ -316,6 +335,16 @@ const storeStreams = async(req, res) => {
                 // Start Of : Device Attribute Insert
                 // ------------------------------
                 const bodyDeviceAttr = req.body.event.device_attributes;
+                await mLogStreams.create({
+                    moe_id: insMoe.id,
+                    event_id: eventIns.id,
+                    attribute_type: 'device_attributes',
+                    attribute_key: 'uid',
+                    attribute_value: eventObj['uid'],
+                    created_at: insMoe.created_at,
+                    entry_year: getYearNow,
+                    entry_month: getMonthNow
+                });
                 await mLogStreams.create({
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
