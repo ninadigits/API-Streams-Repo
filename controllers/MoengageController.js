@@ -209,16 +209,19 @@ const storeStreams = async(req, res) => {
                 // Start Of : User Attribute Insert
                 // ------------------------------
                 const bodyUserAttr = req.body.event.user_attributes;
-                await mLogStreams.create({
-                    moe_id: insMoe.id,
-                    event_id: eventIns.id,
-                    attribute_type: 'user_attributes',
-                    attribute_key: 'uid',
-                    attribute_value: eventObj['uid'],
-                    created_at: insMoe.created_at,
-                    entry_year: getYearNow,
-                    entry_month: getMonthNow
-                });
+                const isEmpty = eventObj['uid'];
+                if(isEmpty == null || isEmpty == "") {
+                    await mLogStreams.create({
+                        moe_id: insMoe.id,
+                        event_id: eventIns.id,
+                        attribute_type: 'user_attributes',
+                        attribute_key: 'uid',
+                        attribute_value: eventObj['uid'],
+                        created_at: insMoe.created_at,
+                        entry_year: getYearNow,
+                        entry_month: getMonthNow
+                    });
+                }
                 await mLogStreams.create({
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
@@ -287,16 +290,18 @@ const storeStreams = async(req, res) => {
                 // Start Of : Event Attribute Insert
                 // ------------------------------
                 const bodyEventAttr = req.body.event.event_attributes;
-                await mLogStreams.create({
-                    moe_id: insMoe.id,
-                    event_id: eventIns.id,
-                    attribute_type: 'event_attributes',
-                    attribute_key: 'uid',
-                    attribute_value: eventObj['uid'],
-                    created_at: insMoe.created_at,
-                    entry_year: getYearNow,
-                    entry_month: getMonthNow
-                });
+                if(isEmpty == null || isEmpty == "") {
+                    await mLogStreams.create({
+                        moe_id: insMoe.id,
+                        event_id: eventIns.id,
+                        attribute_type: 'event_attributes',
+                        attribute_key: 'uid',
+                        attribute_value: eventObj['uid'],
+                        created_at: insMoe.created_at,
+                        entry_year: getYearNow,
+                        entry_month: getMonthNow
+                    });
+                }
                 await mLogStreams.create({
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
@@ -335,16 +340,18 @@ const storeStreams = async(req, res) => {
                 // Start Of : Device Attribute Insert
                 // ------------------------------
                 const bodyDeviceAttr = req.body.event.device_attributes;
-                await mLogStreams.create({
-                    moe_id: insMoe.id,
-                    event_id: eventIns.id,
-                    attribute_type: 'device_attributes',
-                    attribute_key: 'uid',
-                    attribute_value: eventObj['uid'],
-                    created_at: insMoe.created_at,
-                    entry_year: getYearNow,
-                    entry_month: getMonthNow
-                });
+                if(isEmpty == null || isEmpty == "") {
+                    await mLogStreams.create({
+                        moe_id: insMoe.id,
+                        event_id: eventIns.id,
+                        attribute_type: 'device_attributes',
+                        attribute_key: 'uid',
+                        attribute_value: eventObj['uid'],
+                        created_at: insMoe.created_at,
+                        entry_year: getYearNow,
+                        entry_month: getMonthNow
+                    });
+                }
                 await mLogStreams.create({
                     moe_id: insMoe.id,
                     event_id: eventIns.id,
