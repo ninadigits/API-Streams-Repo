@@ -188,30 +188,17 @@ const storeStreams = async(req, res) => {
             const dateNow = new Date();
             const getYearNow = dateNow.getFullYear();
             const getMonthNow = dateNow.getMonth() + 1;
-            if(eventObj['event_type'] == null && eventObj['event_type'] == "") {
-                const eventIns = await mEvents.create({
-                    id : eventID,
-                    moe_id: insMoe.id,
-                    event_code: eventObj['event_code'],
-                    event_name: eventObj['event_name'],
-                    event_source: eventObj['event_source'],
-                    event_uuid: eventObj['event_uuid'],
-                    event_time: eventObj['event_time'],
-                    created_at: insMoe.created_at
-                }, { transaction : tx });
-            } else {
-                const eventIns = await mEvents.create({
-                    id : eventID,
-                    moe_id: insMoe.id,
-                    event_type: eventObj['event_type'],
-                    event_code: eventObj['event_code'],
-                    event_name: eventObj['event_name'],
-                    event_source: eventObj['event_source'],
-                    event_uuid: eventObj['event_uuid'],
-                    event_time: eventObj['event_time'],
-                    created_at: insMoe.created_at
-                }, { transaction : tx });
-            }
+            const eventIns = await mEvents.create({
+                id : eventID,
+                moe_id: insMoe.id,
+                event_type: eventObj['event_type'],
+                event_code: eventObj['event_code'],
+                event_name: eventObj['event_name'],
+                event_source: eventObj['event_source'],
+                event_uuid: eventObj['event_uuid'],
+                event_time: eventObj['event_time'],
+                created_at: insMoe.created_at
+            }, { transaction : tx });
             if(eventIns) {
                 tx.commit();
                 const newArr = [{insMoe}];
