@@ -184,6 +184,14 @@ const storeStreams = async(req, res) => {
             let eventID = '';
             for (let i = 0; i < maxLength; i++ ) {
                 eventID += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }  
+            let eventTypeVal = "";
+            if(eventObj['event_type'] == null || 
+                eventObj['event_type'] == "" || 
+                eventObj['event_type'] == undefined) {
+                eventTypeVal = "NULL";
+            } else {
+                eventTypeVal = eventObj['event_type'];
             }
             const dateNow = new Date();
             const getYearNow = dateNow.getFullYear();
@@ -191,7 +199,7 @@ const storeStreams = async(req, res) => {
             const eventIns = await mEvents.create({
                 id : eventID,
                 moe_id: insMoe.id,
-                event_type: eventObj['event_type'],
+                event_type: eventTypeVal,
                 event_code: eventObj['event_code'],
                 event_name: eventObj['event_name'],
                 event_source: eventObj['event_source'],
