@@ -187,8 +187,7 @@ const storeStreams = async(req, res) => {
             }  
             let eventTypeVal = "";
             if(eventObj['event_type'] == null || 
-                eventObj['event_type'] == "" || 
-                eventObj['event_type'] == undefined) {
+                eventObj['event_type'] == "") {
                 eventTypeVal = "NULL";
             } else {
                 eventTypeVal = eventObj['event_type'];
