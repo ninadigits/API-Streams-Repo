@@ -216,7 +216,7 @@ const storeStreams = async(req, res) => {
                 // ------------------------------
                 // Start Of : User Attribute Insert
                 // ------------------------------
-                const bodyUserAttr = req.body.event.user_attributes;
+                const bodyUserAttr = req.body.user_attributes;
                 const isEmpty = req.body['uid'];
                 if(isEmpty == null || isEmpty == "") {
                     await mLogStreams.create({
@@ -297,7 +297,7 @@ const storeStreams = async(req, res) => {
                 // ------------------------------
                 // Start Of : Event Attribute Insert
                 // ------------------------------
-                const bodyEventAttr = req.body.event.event_attributes;
+                const bodyEventAttr = req.body.event_attributes;
                 if(isEmpty == null || isEmpty == "") {
                     await mLogStreams.create({
                         moe_id: insMoe.id,
@@ -347,7 +347,7 @@ const storeStreams = async(req, res) => {
                 // ------------------------------
                 // Start Of : Device Attribute Insert
                 // ------------------------------
-                const bodyDeviceAttr = req.body.event.device_attributes;
+                const bodyDeviceAttr = req.body.device_attributes;
                 if(isEmpty == null || isEmpty == "") {
                     await mLogStreams.create({
                         moe_id: insMoe.id,
