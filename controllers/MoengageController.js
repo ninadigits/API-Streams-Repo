@@ -178,7 +178,7 @@ const storeStreams = async(req, res) => {
             // ----------------------------
             // Start Of storing data events
             // ----------------------------
-            let eventObj = req.body.event;
+            // let eventObj = req.body.event;
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz|0123456789';
             const charactersLength = characters.length;
             let maxLength = 80;
@@ -187,11 +187,11 @@ const storeStreams = async(req, res) => {
                 eventID += characters.charAt(Math.floor(Math.random() * charactersLength));
             }  
             let eventTypeVal = "";
-            if(eventObj['event_type'] == null || 
-                eventObj['event_type'] == "") {
+            if(req.body['event_type'] == null || 
+                req.body['event_type'] == "") {
                 eventTypeVal = "NULL";
             } else {
-                eventTypeVal = eventObj['event_type'];
+                eventTypeVal = req.body['event_type'];
             }
             const dateNow = new Date();
             const getYearNow = dateNow.getFullYear();
@@ -200,11 +200,11 @@ const storeStreams = async(req, res) => {
                 id : eventID,
                 moe_id: insMoe.id,
                 event_type: eventTypeVal,
-                event_code: eventObj['event_code'],
-                event_name: eventObj['event_name'],
-                event_source: eventObj['event_source'],
-                event_uuid: eventObj['event_uuid'],
-                event_time: eventObj['event_time'],
+                event_code: req.body['event_code'],
+                event_name: req.body['event_name'],
+                event_source: req.body['event_source'],
+                event_uuid: req.body['event_uuid'],
+                event_time: req.body['event_time'],
                 created_at: insMoe.created_at
             }, { transaction : tx });
             if(eventIns) {
@@ -217,14 +217,14 @@ const storeStreams = async(req, res) => {
                 // Start Of : User Attribute Insert
                 // ------------------------------
                 const bodyUserAttr = req.body.event.user_attributes;
-                const isEmpty = eventObj['uid'];
+                const isEmpty = req.body['uid'];
                 if(isEmpty == null || isEmpty == "") {
                     await mLogStreams.create({
                         moe_id: insMoe.id,
                         event_id: eventIns.id,
                         attribute_type: 'user_attributes',
                         attribute_key: 'uid',
-                        attribute_value: eventObj['uid'],
+                        attribute_value: req.body['uid'],
                         created_at: insMoe.created_at,
                         entry_year: getYearNow,
                         entry_month: getMonthNow
@@ -304,7 +304,7 @@ const storeStreams = async(req, res) => {
                         event_id: eventIns.id,
                         attribute_type: 'event_attributes',
                         attribute_key: 'uid',
-                        attribute_value: eventObj['uid'],
+                        attribute_value: req.body['uid'],
                         created_at: insMoe.created_at,
                         entry_year: getYearNow,
                         entry_month: getMonthNow
@@ -354,7 +354,7 @@ const storeStreams = async(req, res) => {
                         event_id: eventIns.id,
                         attribute_type: 'device_attributes',
                         attribute_key: 'uid',
-                        attribute_value: eventObj['uid'],
+                        attribute_value: req.body['uid'],
                         created_at: insMoe.created_at,
                         entry_year: getYearNow,
                         entry_month: getMonthNow
