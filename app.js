@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apiStreams, bodyParser);
+app.use('/api', apiStreams);
 // -------------------
 // End Of Rest API 
 // -------------------
