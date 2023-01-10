@@ -5,6 +5,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const bodyParser = require('body-parser');
+
 // -------------------
 // Start Routes
 // -----------------
@@ -39,9 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // -------------------
 // Start Of Rest API 
 // -------------------
+app.use(bodyParser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apiStreams);
+app.use('/api', apiStreams, bodyParser);
 // -------------------
 // End Of Rest API 
 // -------------------
