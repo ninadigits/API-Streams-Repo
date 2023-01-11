@@ -166,20 +166,23 @@ const storeStreams = async(req, res) => {
     try {
         // const { app_name, export_doc_id, event } = req.body;
         const dataBody = req.body;
-        console.log(JSON.parse(JSON.stringify(dataBody)));
+        const bodyParse = JSON.parse(JSON.stringify(dataBody));
+        console.log("Body JSON Parse >> : ", bodyParse);
+        console.log("Events Body >> : ", bodyParse.events);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
         // const insMoe = await modelMoe.create({
-        //     app_name: req.body.app_name,
-        //     export_doc_id: req.body.export_doc_id,
+        //     app_name: bodyParse.app_name,
+        //     export_doc_id: bodyParse.export_doc_id,
         //     created_at: new Date(),
         // }, { transaction : tx });
         // if (insMoe) {
         //     // ----------------------------
         //     // Start Of storing data events
         //     // ----------------------------
-        //     // let eventObj = req.body.event;
+        //     let eventObj = bodyParse.event;
+        //     console.log(JSON.parse(eventObj));
         //     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz|0123456789';
         //     const charactersUid ='abcdefghijklmnopqrstuvwxyz|0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         //     const charactersLength = characters.length;
@@ -189,20 +192,20 @@ const storeStreams = async(req, res) => {
         //         eventID += characters.charAt(Math.floor(Math.random() * charactersLength));
         //     }  
         //     let eventTypeVal = "";
-        //     if(req.body['event_type'] == null || 
-        //         req.body['event_type'] == "") {
+        //     if(eventObj['event_type'] == null || 
+        //         eventObj['event_type'] == "") {
         //         eventTypeVal = "NULL";
         //     } else {
-        //         eventTypeVal = req.body['event_type'];
+        //         eventTypeVal = eventObj['event_type'];
         //     }
         //     let eventUuidVal = "";
-        //     if(req.body['event_uuid'] == null || 
-        //         req.body['event_uuid'] == "") {
+        //     if(eventObj['event_uuid'] == null || 
+        //         eventObj['event_uuid'] == "") {
         //         for (let j = 0; j < maxLength; j++ ) {
         //             eventUuidVal += charactersUid.charAt(Math.floor(Math.random() * charactersLength));
         //         }
         //     } else {
-        //         eventUuidVal = req.body['event_uuid'];
+        //         eventUuidVal = eventObj['event_uuid'];
         //     }
         //     const dateNow = new Date();
         //     const getYearNow = dateNow.getFullYear();
@@ -211,11 +214,11 @@ const storeStreams = async(req, res) => {
         //         id : eventID,
         //         moe_id: insMoe.id,
         //         event_type: eventTypeVal,
-        //         event_code: req.body['event_code'],
-        //         event_name: req.body['event_name'],
-        //         event_source: req.body['event_source'],
+        //         event_code: eventObj['event_code'],
+        //         event_name: eventObj['event_name'],
+        //         event_source: eventObj['event_source'],
         //         event_uuid: eventUuidVal,
-        //         event_time: req.body['event_time'],
+        //         event_time: eventObj['event_time'],
         //         created_at: insMoe.created_at
         //     }, { transaction : tx });
         //     if(eventIns) {
