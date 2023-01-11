@@ -449,11 +449,11 @@ const storeStreams = async(req, res) => {
         //         newArr.forEach(object => {
         //             object.logStreams = logDataStreams;
         //         });
-        //         res.status(200).send({
-        //             status: 200,
-        //             message: "Success to store moengage events",
-        //             data: newArr
-        //         });
+                res.status(200).send({
+                    status: 200,
+                    message: "Success to store moengage events",
+                    data: bodyParse
+                });
         //         // console.log(newArr);
         //     } else {
         //         tx.rollback();
