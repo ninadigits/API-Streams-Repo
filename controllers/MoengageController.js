@@ -168,6 +168,7 @@ const storeStreams = async(req, res) => {
         const dataBody = req.body;
         const bodyParse = JSON.parse(JSON.stringify(dataBody));
         console.log("Body JSON Parse >> : ", bodyParse);
+        console.log("Parsing Events >> : ", JSON.parse(JSON.stringify(bodyParse.events)));
         res.status(200).send({
             status: 200,
             message: "Success to store moengage events",
