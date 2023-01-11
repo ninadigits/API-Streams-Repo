@@ -197,7 +197,7 @@ const storeStreams = async(req, res) => {
             let eventUuidVal = "";
             if(req.body['event_uuid'] == null || 
                 req.body['event_uuid'] == "") {
-                for (let j = 0; i < maxLength; j++ ) {
+                for (let j = 0; j < maxLength; j++ ) {
                     eventUuidVal += charactersUid.charAt(Math.floor(Math.random() * charactersLength));
                 }
             } else {
