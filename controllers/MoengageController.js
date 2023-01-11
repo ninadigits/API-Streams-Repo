@@ -180,6 +180,7 @@ const storeStreams = async(req, res) => {
             // ----------------------------
             // let eventObj = req.body.event;
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz|0123456789';
+            const charactersUid ='abcdefghijklmnopqrstuvwxyz|0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const charactersLength = characters.length;
             let maxLength = 80;
             let eventID = '';
@@ -193,6 +194,15 @@ const storeStreams = async(req, res) => {
             } else {
                 eventTypeVal = req.body['event_type'];
             }
+            let eventUuidVal = "";
+            if(req.body['event_uuid'] == null || 
+                req.body['event_uuid'] == "") {
+                for (let j = 0; i < maxLength; j++ ) {
+                    eventUuidVal += charactersUid.charAt(Math.floor(Math.random() * charactersLength));
+                }
+            } else {
+                eventUuidVal = req.body['event_uuid'];
+            }
             const dateNow = new Date();
             const getYearNow = dateNow.getFullYear();
             const getMonthNow = dateNow.getMonth() + 1;
@@ -203,7 +213,7 @@ const storeStreams = async(req, res) => {
                 event_code: req.body['event_code'],
                 event_name: req.body['event_name'],
                 event_source: req.body['event_source'],
-                event_uuid: req.body['event_uuid'],
+                event_uuid: eventUuidVal,
                 event_time: req.body['event_time'],
                 created_at: insMoe.created_at
             }, { transaction : tx });
