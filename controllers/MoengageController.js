@@ -168,7 +168,11 @@ const storeStreams = async(req, res) => {
         const dataBody = req.body;
         const bodyParse = JSON.parse(JSON.stringify(dataBody));
         console.log("Body JSON Parse >> : ", bodyParse);
-        console.log("Events Body >> : ", bodyParse.events);
+        res.status(200).send({
+            status: 200,
+            message: "Success to store moengage events",
+            data: bodyParse
+        });
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
@@ -449,11 +453,11 @@ const storeStreams = async(req, res) => {
         //         newArr.forEach(object => {
         //             object.logStreams = logDataStreams;
         //         });
-                res.status(200).send({
-                    status: 200,
-                    message: "Success to store moengage events",
-                    data: bodyParse
-                });
+        //         res.status(200).send({
+        //             status: 200,
+        //             message: "Success to store moengage events",
+        //             data: bodyParse
+        //         });
         //         // console.log(newArr);
         //     } else {
         //         tx.rollback();
