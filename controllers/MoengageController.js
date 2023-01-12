@@ -158,319 +158,385 @@ function newArrDeviceCount(deviceArr) {
 // End Of : Data cube scheduler
 // --------------------------
 
+// --------------------------------
+// Start Of : API Streams Endpoint
+// --------------------------------
+function checkEvent(insEvent) {
+    const uniqueEvnUuid = [];
+    const unique = insEvent.filter(element => {
+        const isDuplicate = uniqueEvnUuid.includes(element.event_uuid);
+        if (!isDuplicate) {
+            uniqueEvnUuid.push(element);
+            return true;
+        }
+        return false;
+    });
+    return unique;
+}
+
 const storeStreams = async(req, res) => {
     const modelMoe = await models.Moengage;
     const mEvents = await models.Events;
     const mLogStreams = await models.LogAttributeStreams;
     const tx = await dbConn.transaction();
     try {
-        // const { app_name, export_doc_id, event } = req.body;
         const dataBody = req.body;
-        const bodyParse = JSON.parse(JSON.stringify(dataBody));
-        console.log("Body JSON Parse >> : ", bodyParse);
-        console.log("Parsing Events >> : ", JSON.parse(JSON.stringify(bodyParse.events)));
-        res.status(200).send({
-            status: 200,
-            message: "Success to store moengage events",
-            data: bodyParse
-        });
+        console.log("Data Body >> : ", dataBody);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
-        // const insMoe = await modelMoe.create({
-        //     app_name: bodyParse.app_name,
-        //     export_doc_id: bodyParse.export_doc_id,
-        //     created_at: new Date(),
-        // }, { transaction : tx });
-        // if (insMoe) {
-        //     // ----------------------------
-        //     // Start Of storing data events
-        //     // ----------------------------
-        //     let eventObj = bodyParse.event;
-        //     console.log(JSON.parse(eventObj));
-        //     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz|0123456789';
-        //     const charactersUid ='abcdefghijklmnopqrstuvwxyz|0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        //     const charactersLength = characters.length;
-        //     let maxLength = 80;
-        //     let eventID = '';
-        //     for (let i = 0; i < maxLength; i++ ) {
-        //         eventID += characters.charAt(Math.floor(Math.random() * charactersLength));
-        //     }  
-        //     let eventTypeVal = "";
-        //     if(eventObj['event_type'] == null || 
-        //         eventObj['event_type'] == "") {
-        //         eventTypeVal = "NULL";
-        //     } else {
-        //         eventTypeVal = eventObj['event_type'];
-        //     }
-        //     let eventUuidVal = "";
-        //     if(eventObj['event_uuid'] == null || 
-        //         eventObj['event_uuid'] == "") {
-        //         for (let j = 0; j < maxLength; j++ ) {
-        //             eventUuidVal += charactersUid.charAt(Math.floor(Math.random() * charactersLength));
-        //         }
-        //     } else {
-        //         eventUuidVal = eventObj['event_uuid'];
-        //     }
-        //     const dateNow = new Date();
-        //     const getYearNow = dateNow.getFullYear();
-        //     const getMonthNow = dateNow.getMonth() + 1;
-        //     const eventIns = await mEvents.create({
-        //         id : eventID,
-        //         moe_id: insMoe.id,
-        //         event_type: eventTypeVal,
-        //         event_code: eventObj['event_code'],
-        //         event_name: eventObj['event_name'],
-        //         event_source: eventObj['event_source'],
-        //         event_uuid: eventUuidVal,
-        //         event_time: eventObj['event_time'],
-        //         created_at: insMoe.created_at
-        //     }, { transaction : tx });
-        //     if(eventIns) {
-        //         tx.commit();
-        //         const newArr = [{insMoe}];
-        //         newArr.forEach(object => {
-        //             object.event = eventIns;
-        //         });
-        //         // ------------------------------
-        //         // Start Of : User Attribute Insert
-        //         // ------------------------------
-        //         const bodyUserAttr = req.body.user_attributes;
-        //         const isEmpty = req.body['uid'];
-        //         if(isEmpty == null || isEmpty == "") {
-        //             await mLogStreams.create({
-        //                 moe_id: insMoe.id,
-        //                 event_id: eventIns.id,
-        //                 attribute_type: 'user_attributes',
-        //                 attribute_key: 'uid',
-        //                 attribute_value: req.body['uid'],
-        //                 created_at: insMoe.created_at,
-        //                 entry_year: getYearNow,
-        //                 entry_month: getMonthNow
-        //             });
-        //         }
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'no_of_conversions',
-        //             attribute_value: bodyUserAttr['no_of_conversions'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({ 
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'first_seen',
-        //             attribute_value: bodyUserAttr['first_seen'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'last_known_city',
-        //             attribute_value: bodyUserAttr['last_known_city'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'last_seen',
-        //             attribute_value: bodyUserAttr['last_seen'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'moengage_user_id',
-        //             attribute_value: bodyUserAttr['moengage_user_id'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'user_attributes',
-        //             attribute_key: 'ltv',
-        //             attribute_value: bodyUserAttr['ltv'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         // ------------------------------
-        //         // End Of : User Attribute Insert
-        //         // ------------------------------
-
-        //         // ------------------------------
-        //         // Start Of : Event Attribute Insert
-        //         // ------------------------------
-        //         const bodyEventAttr = req.body.event_attributes;
-        //         if(isEmpty == null || isEmpty == "") {
-        //             await mLogStreams.create({
-        //                 moe_id: insMoe.id,
-        //                 event_id: eventIns.id,
-        //                 attribute_type: 'event_attributes',
-        //                 attribute_key: 'uid',
-        //                 attribute_value: req.body['uid'],
-        //                 created_at: insMoe.created_at,
-        //                 entry_year: getYearNow,
-        //                 entry_month: getMonthNow
-        //             });
-        //         }
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'event_attributes',
-        //             attribute_key: 'appVersion',
-        //             attribute_value: bodyEventAttr['appVersion'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'event_attributes',
-        //             attribute_key: 'language',
-        //             attribute_value: bodyEventAttr['language'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'event_attributes',
-        //             attribute_key: 'sdkVersion',
-        //             attribute_value: bodyEventAttr['sdkVersion'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         // ------------------------------
-        //         // End Of : Event Attribute Insert
-        //         // ------------------------------
-
-        //         // ------------------------------
-        //         // Start Of : Device Attribute Insert
-        //         // ------------------------------
-        //         const bodyDeviceAttr = req.body.device_attributes;
-        //         if(isEmpty == null || isEmpty == "") {
-        //             await mLogStreams.create({
-        //                 moe_id: insMoe.id,
-        //                 event_id: eventIns.id,
-        //                 attribute_type: 'device_attributes',
-        //                 attribute_key: 'uid',
-        //                 attribute_value: req.body['uid'],
-        //                 created_at: insMoe.created_at,
-        //                 entry_year: getYearNow,
-        //                 entry_month: getMonthNow
-        //             });
-        //         }
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'product',
-        //             attribute_value: bodyDeviceAttr['product'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'os_api_level',
-        //             attribute_value: bodyDeviceAttr['os_api_level'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'os_version',
-        //             attribute_value: bodyDeviceAttr['os_version'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'moengage_device_id',
-        //             attribute_value: bodyDeviceAttr['moengage_device_id'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'MODEL',
-        //             attribute_value: bodyDeviceAttr['MODEL'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         await mLogStreams.create({
-        //             moe_id: insMoe.id,
-        //             event_id: eventIns.id,
-        //             attribute_type: 'device_attributes',
-        //             attribute_key: 'manufacturer',
-        //             attribute_value: bodyDeviceAttr['manufacturer'],
-        //             created_at: insMoe.created_at,
-        //             entry_year: getYearNow,
-        //             entry_month: getMonthNow
-        //         });
-        //         // ------------------------------
-        //         // End Of : Device Attribute Insert
-        //         // ------------------------------
-        //         const logDataStreams = await mLogStreams.findAll({
-        //             where: {
-        //                 moe_id: insMoe.id,
-        //                 event_id: eventIns.id
-        //             },
-        //             order: [
-        //                 ['created_at', 'ASC']
-        //             ]
-        //         })
-        //         newArr.forEach(object => {
-        //             object.logStreams = logDataStreams;
-        //         });
-        //         res.status(200).send({
-        //             status: 200,
-        //             message: "Success to store moengage events",
-        //             data: bodyParse
-        //         });
-        //         // console.log(newArr);
-        //     } else {
-        //         tx.rollback();
-        //         res.status(400).send({
-        //             status: 400,
-        //             message: 'Error Code'
-        //         });
-        //     }
-        // }
-        // -------------------------------
+        const insMoe = await modelMoe.create({
+            app_name: dataBody.app_name,
+            export_doc_id: dataBody.export_doc_id,
+            created_at: new Date(),
+        }, { transaction : tx });
+        // ---------------------------------------
         // End Of storing data moengage 
-        // -------------------------------
+        // ---------------------------------------
+        if (insMoe) {
+            const bodyEvent = dataBody.events;
+            const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz|0123456789';
+            const charactersLength = characters.length;
+            let maxLength = 80;
+            if(bodyEvent.length > 0) {
+                let eventID = [];
+                for (let n = 0; n < bodyEvent.length; n++) {
+                    for (let k = 0; k < maxLength; k++ ) {
+                        eventID[n] += characters.charAt(Math.floor(Math.random() * charactersLength));
+                    }
+                    eventID[n] = eventID[n].replace('undefined','');
+                }
+                let insEvent = [];
+                // ---------------------------------------
+                // Start Of : Store Data Events
+                // ---------------------------------------
+                for (let i = 0; i < bodyEvent.length; i++) {
+                    insEvent[i] = await mEvents.create({
+                        id: eventID[i],
+                        moe_id: insMoe.id,
+                        event_type: bodyEvent[i].event_type,
+                        event_code: bodyEvent[i].event_code,
+                        event_name: bodyEvent[i].event_name,
+                        event_source: bodyEvent[i].event_source,
+                        event_uuid: bodyEvent[i].event_uuid,
+                        event_time: bodyEvent[i].event_time,
+                        created_at: insMoe.created_at
+                    }, { transaction : tx });
+                }
+                // ---------------------------------------
+                // End Of : Store Events
+                // ---------------------------------------
+                const newArr = [{insMoe}];
+                newArr.forEach(object => {
+                    object.events = insEvent;
+                });
+                let dataEvent = checkEvent(insEvent);
+                if(dataEvent) {
+                    tx.commit();
+                    const eventLength = dataBody.events.length;
+                    const dateNow = new Date();
+                    const getYearNow = dateNow.getFullYear();
+                    const getMonthNow = dateNow.getMonth() + 1;
+                    let logUserAttr = [];
+                    let logEventAttr = [];
+                    let logDeviceAttr = [];
+                    for (let j = 0; j < eventLength; j++) {
+                        // ---------------------------------------
+                        // Start Of : Store User Attributes Events
+                        // ---------------------------------------
+                        if(bodyEvent[j].user_attributes['id'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'id',
+                                attribute_value: bodyEvent[j].user_attributes['id'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].user_attributes['mobile_number'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'mobile_number',
+                                attribute_value: bodyEvent[j].user_attributes['mobile_number'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].user_attributes['moengage_user_id'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'moengage_user_id',
+                                attribute_value: bodyEvent[j].user_attributes['moengage_user_id'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(dataBody.events[j].user_attributes['email'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: insEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'email',
+                                attribute_value: dataBody.events[j].user_attributes['email'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].user_attributes['no_of_conversions'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'no_of_conversions',
+                                attribute_value: bodyEvent[j].user_attributes['no_of_conversions'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].user_attributes['first_seen'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'first_seen',
+                                attribute_value: bodyEvent[j].user_attributes['first_seen'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].user_attributes['ltv'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'user_attributes',
+                                attribute_key: 'first_seen',
+                                attribute_value: bodyEvent[j].user_attributes['ltv'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        logUserAttr[j] = bodyEvent[j].user_attributes;
+                        // ---------------------------------------
+                        // End Of : Store User Attributes Events
+                        // ---------------------------------------
+
+                        // ---------------------------------------
+                        // Start Of : Store Event Attributes
+                        // ---------------------------------------
+                        if(bodyEvent[j].event_attributes['appVersion'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'appVersion',
+                                attribute_value: bodyEvent[j].event_attributes['appVersion'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['sdkVersion'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'sdkVersion',
+                                attribute_value: bodyEvent[j].event_attributes['sdkVersion'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['price'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'price',
+                                attribute_value: bodyEvent[j].event_attributes['price'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['email'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'email',
+                                attribute_value: bodyEvent[j].event_attributes['email'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['name'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'name',
+                                attribute_value: bodyEvent[j].event_attributes['name'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['id'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'id',
+                                attribute_value: bodyEvent[j].event_attributes['id'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['type'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'type',
+                                attribute_value: bodyEvent[j].event_attributes['type'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        logEventAttr[j] = bodyEvent[j].event_attributes;
+                        // ---------------------------------------
+                        // End Of : Store Event Attributes 
+                        // ---------------------------------------
+
+                        // ---------------------------------------
+                        // Start Of : Device Attributes
+                        // ---------------------------------------
+                        if(bodyEvent[j].device_attributes['product'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'product',
+                                attribute_value: bodyEvent[j].device_attributes['product'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].device_attributes['product'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'os_api_level',
+                                attribute_value: bodyEvent[j].device_attributes['os_api_level'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].device_attributes['os_version'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'os_version',
+                                attribute_value: bodyEvent[j].device_attributes['os_version'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].device_attributes['moengage_device_id'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'moengage_device_id',
+                                attribute_value: bodyEvent[j].device_attributes['moengage_device_id'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].device_attributes['MODEL'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'MODEL',
+                                attribute_value: bodyEvent[j].device_attributes['MODEL'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].device_attributes['manufacturer'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'device_attributes',
+                                attribute_key: 'manufacturer',
+                                attribute_value: bodyEvent[j].device_attributes['manufacturer'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        logDeviceAttr[j] = bodyEvent[j].device_attributes;
+                        // ---------------------------------------
+                        // End Of : Device Attributes 
+                        // ---------------------------------------
+                    }
+                    newArr.forEach(object => {
+                        object.user_attributes = logUserAttr;
+                        object.event_attributes = logEventAttr;
+                        object.device_attributes = logDeviceAttr;
+                    });
+                    console.log("Result >> : ", newArr);
+                    res.status(200).send({
+                        status: 200,
+                        message: "success",
+                        data: newArr
+                    });
+                } else {
+                    tx.rollback();
+                    res.status(400).send({
+                        status: 400,
+                        message: error
+                    }); 
+                }
+            } else {
+                tx.rollback();
+                res.status(400).send({
+                    status: 400,
+                    message: error
+                }); 
+            } 
+        } else {
+            tx.rollback();
+            res.status(400).send({
+                status: 400,
+                message: error
+            }); 
+        }
     } catch (error) {
         tx.rollback();
         res.status(400).send({
@@ -480,9 +546,9 @@ const storeStreams = async(req, res) => {
         console.log(error);
     }
 }
-// -------------------
-// END
-// -------------------
+// --------------------------------
+// End Of : API Streams Endpoint
+// --------------------------------
 function convertTZ(date, tzString) {
     return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
 }
