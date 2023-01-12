@@ -181,7 +181,7 @@ const storeStreams = async(req, res) => {
     const tx = await dbConn.transaction();
     try {
         const dataBody = req.body;
-        console.log("Data Body >> : ", dataBody);
+        console.log("Data Body >> 1 : ", dataBody);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
