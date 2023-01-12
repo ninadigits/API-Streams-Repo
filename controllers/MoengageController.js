@@ -181,7 +181,6 @@ const storeStreams = async(req, res) => {
     const tx = await dbConn.transaction();
     try {
         const dataBody = req.body;
-        console.log("Data Body >> 1 : ", dataBody);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
@@ -510,7 +509,6 @@ const storeStreams = async(req, res) => {
                         object.event_attributes = logEventAttr;
                         object.device_attributes = logDeviceAttr;
                     });
-                    console.log("Result >> : ", newArr);
                     res.status(200).send({
                         status: 200,
                         message: "success",
