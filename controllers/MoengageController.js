@@ -178,9 +178,11 @@ const storeStreams = async(req, res) => {
     const modelMoe = await models.Moengage;
     const mEvents = await models.Events;
     const mLogStreams = await models.LogAttributeStreams;
-    const tx = await dbConn.transaction();
+    let tx;
     try {
+        tx = await dbConn.transaction();
         const dataBody = req.body;
+        console.log("Data Body >> : ", dataBody);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
@@ -188,7 +190,7 @@ const storeStreams = async(req, res) => {
             app_name: dataBody.app_name,
             export_doc_id: dataBody.export_doc_id,
             created_at: new Date(),
-        }, { transaction : tx });
+        }, { tx });
         // ---------------------------------------
         // End Of storing data moengage 
         // ---------------------------------------
@@ -220,7 +222,7 @@ const storeStreams = async(req, res) => {
                         event_uuid: bodyEvent[i].event_uuid,
                         event_time: bodyEvent[i].event_time,
                         created_at: insMoe.created_at
-                    }, { transaction : tx });
+                    }, { tx });
                 }
                 // ---------------------------------------
                 // End Of : Store Events
@@ -231,7 +233,7 @@ const storeStreams = async(req, res) => {
                 });
                 let dataEvent = checkEvent(insEvent);
                 if(dataEvent) {
-                    tx.commit();
+                    // tx.commit();
                     const eventLength = dataBody.events.length;
                     const dateNow = new Date();
                     const getYearNow = dateNow.getFullYear();
@@ -504,39 +506,46 @@ const storeStreams = async(req, res) => {
                         // End Of : Device Attributes 
                         // ---------------------------------------
                     }
+                    await tx.commit();
                     newArr.forEach(object => {
                         object.user_attributes = logUserAttr;
                         object.event_attributes = logEventAttr;
                         object.device_attributes = logDeviceAttr;
                     });
+                    console.log("Result >> : ", newArr);
                     res.status(200).send({
                         status: 200,
                         message: "success",
                         data: newArr
                     });
                 } else {
-                    tx.rollback();
+                    if(tx) {
+                        await tx.rollback();
+                    }
                     res.status(400).send({
                         status: 400,
                         message: error
                     }); 
                 }
             } else {
-                tx.rollback();
+                if(tx) {
+                    await tx.rollback();
+                }
                 res.status(400).send({
                     status: 400,
                     message: error
                 }); 
             } 
         } else {
-            tx.rollback();
+            if(tx) {
+                await tx.rollback();
+            }
             res.status(400).send({
                 status: 400,
                 message: error
             }); 
         }
     } catch (error) {
-        tx.rollback();
         res.status(400).send({
             status: 400,
             message: error
