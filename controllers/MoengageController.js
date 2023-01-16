@@ -182,7 +182,6 @@ const storeStreams = async(req, res) => {
     try {
         tx = await dbConn.transaction();
         const dataBody = req.body;
-        console.log("Data Body >> : ", dataBody);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
@@ -235,9 +234,12 @@ const storeStreams = async(req, res) => {
                 if(dataEvent) {
                     // tx.commit();
                     const eventLength = dataBody.events.length;
-                    const dateNow = new Date();
-                    const getYearNow = dateNow.getFullYear();
-                    const getMonthNow = dateNow.getMonth() + 1;
+                    const dateNow = new Date().toLocaleString('en-US', {
+                        timeZone: 'Asia/Jakarta'
+                    });
+                    const splitDate = dateNow.split("/");
+                    const getYearNow = parseInt(splitDate[2]);
+                    const getMonthNow = parseInt(splitDate[0]);
                     let logUserAttr = [];
                     let logEventAttr = [];
                     let logDeviceAttr = [];
