@@ -182,13 +182,16 @@ const storeStreams = async(req, res) => {
     try {
         tx = await dbConn.transaction();
         const dataBody = req.body;
+        // const currentDate = new Date().toLocaleString('en-US', {
+        //     timeZone: 'Asia/Jakarta'
+        // });
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
         const insMoe = await modelMoe.create({
             app_name: dataBody.app_name,
             export_doc_id: dataBody.export_doc_id,
-            created_at: new Date(),
+            created_at: new Date()
         }, { tx });
         // ---------------------------------------
         // End Of storing data moengage 
