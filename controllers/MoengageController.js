@@ -512,7 +512,6 @@ const storeStreams = async(req, res) => {
                         object.event_attributes = logEventAttr;
                         object.device_attributes = logDeviceAttr;
                     });
-                    console.log("Result >> : ", newArr);
                     res.status(200).send({
                         status: 200,
                         message: "success",
