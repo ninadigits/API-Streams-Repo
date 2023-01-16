@@ -182,9 +182,10 @@ const storeStreams = async(req, res) => {
     try {
         tx = await dbConn.transaction();
         const dataBody = req.body;
-        // const currentDate = new Date().toLocaleString('en-US', {
-        //     timeZone: 'Asia/Jakarta'
-        // });
+        const currentDate = new Date().toLocaleString('en-US', {
+            timeZone: 'Asia/Jakarta'
+        });
+        console.log("current Date >> : ", currentDate);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
