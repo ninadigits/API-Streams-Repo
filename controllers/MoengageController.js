@@ -185,7 +185,6 @@ const storeStreams = async(req, res) => {
         const currentDate = new Date().toLocaleString('en-US', {
             timeZone: 'Asia/Jakarta'
         });
-        console.log("current Date >> : ", currentDate);
         // -------------------------------
         // Start Of storing data moengage 
         // -------------------------------
@@ -343,6 +342,42 @@ const storeStreams = async(req, res) => {
                         // ---------------------------------------
                         // Start Of : Store Event Attributes
                         // ---------------------------------------
+                        if(bodyEvent[j].event_attributes['habit'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'habit',
+                                attribute_value: bodyEvent[j].event_attributes['habit'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['risk_area'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'risk_area',
+                                attribute_value: bodyEvent[j].event_attributes['risk_area'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['keyword'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'keyword',
+                                attribute_value: bodyEvent[j].event_attributes['keyword'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
                         if(bodyEvent[j].event_attributes['appVersion'] != "") {
                             await mLogStreams.create({
                                 moe_id: insMoe.id,
@@ -367,6 +402,18 @@ const storeStreams = async(req, res) => {
                                 entry_month: getMonthNow
                             });
                         }
+                        if(bodyEvent[j].event_attributes['mobile'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'mobile',
+                                attribute_value: bodyEvent[j].event_attributes['mobile'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
                         if(bodyEvent[j].event_attributes['price'] != "") {
                             await mLogStreams.create({
                                 moe_id: insMoe.id,
@@ -374,6 +421,30 @@ const storeStreams = async(req, res) => {
                                 attribute_type: 'event_attributes',
                                 attribute_key: 'price',
                                 attribute_value: bodyEvent[j].event_attributes['price'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['survey_id'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'survey_id',
+                                attribute_value: bodyEvent[j].event_attributes['survey_id'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['survey_name'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'survey_name',
+                                attribute_value: bodyEvent[j].event_attributes['survey_name'],
                                 created_at: insMoe.created_at,
                                 entry_year: getYearNow,
                                 entry_month: getMonthNow
@@ -416,6 +487,30 @@ const storeStreams = async(req, res) => {
                             });
                         }
                         if(bodyEvent[j].event_attributes['type'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'type',
+                                attribute_value: bodyEvent[j].event_attributes['type'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['language'] != "") {
+                            await mLogStreams.create({
+                                moe_id: insMoe.id,
+                                event_id: dataEvent[j].id,
+                                attribute_type: 'event_attributes',
+                                attribute_key: 'language',
+                                attribute_value: bodyEvent[j].event_attributes['language'],
+                                created_at: insMoe.created_at,
+                                entry_year: getYearNow,
+                                entry_month: getMonthNow
+                            });
+                        }
+                        if(bodyEvent[j].event_attributes['time'] != "") {
                             await mLogStreams.create({
                                 moe_id: insMoe.id,
                                 event_id: dataEvent[j].id,
